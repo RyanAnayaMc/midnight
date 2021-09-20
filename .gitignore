@@ -4,6 +4,12 @@
 # Log file
 *.log
 
+# Token file
+token.dat
+
+# Guild settings filies
+data/guild/
+
 # BlueJ files
 *.ctxt
 
