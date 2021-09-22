@@ -38,6 +38,7 @@ Administrators can download their server's JSON configuration file and tweak it 
 
 ## Libraries
 [Java Discord API (JDA)](https://github.com/DV8FromTheWorld/JDA)
+
 [Quartz Scheduler](https://github.com/quartz-scheduler/quartz)
 
 ## About
