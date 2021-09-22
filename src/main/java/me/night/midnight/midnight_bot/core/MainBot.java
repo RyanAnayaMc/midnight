@@ -11,6 +11,7 @@ import org.quartz.SchedulerException;
 import org.quartz.impl.StdSchedulerFactory;
 
 import me.night.midnight.midnight_bot.core.settings.GuildSettingsHandler;
+import me.night.midnight.midnight_bot.moderation.messageinterceptor.MessageInterceptor;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
@@ -97,6 +98,7 @@ public class MainBot {
         	
         	//jda.upsertCommand(cmd);
         jda.addEventListener(slashCmds);
+        jda.addEventListener(new MessageInterceptor());
         
     	GuildSettingsHandler.retrieveSettings(jda);
     }

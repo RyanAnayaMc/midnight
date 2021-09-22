@@ -10,6 +10,9 @@ token.dat
 # Guild settings filies
 data/guild/
 
+# Attachments files #
+data/attachments/
+
 # BlueJ files
 *.ctxt
 
