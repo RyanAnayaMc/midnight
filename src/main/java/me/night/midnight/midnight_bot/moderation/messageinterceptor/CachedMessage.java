@@ -24,8 +24,9 @@ public class CachedMessage {
 			Date d = new Date();
 			@SuppressWarnings("deprecation")
 			String timestamp = "" + d.getMonth() + d.getDay() + d.getHours() + d.getMinutes();
-			String filename = BotSettings.ATTACHMENT_CACHE_DEFAULT + timestamp + "_" + a.getFileName();
+			String filename = BotSettings.ATTACHMENT_CACHE_DEFAULT + "\\" + m.getGuild().getId() + "\\" + timestamp + "_" + a.getFileName();
 			File file = new File(filename);
+			file.mkdirs();
 			
 			if (file.exists())
 				file.delete();

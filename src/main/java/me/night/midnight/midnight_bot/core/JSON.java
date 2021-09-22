@@ -22,6 +22,7 @@ public class JSON {
 		
 		public void write(String path) {
 			File outputFile = new File(path);
+			outputFile.mkdirs();
 			PrintWriter pw = null;
 			
 			try {

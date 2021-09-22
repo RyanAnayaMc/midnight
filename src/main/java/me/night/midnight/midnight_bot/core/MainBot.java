@@ -32,7 +32,9 @@ public class MainBot {
 	
     public static void main( String[] args ) {
     	// Perform initial setup
-    	Logger.setupLogger();
+    	Logger.setupLogger(); // Logger setup
+    	
+    	// Scheduler setup
     	try {
 			scheduler = StdSchedulerFactory.getDefaultScheduler();
 			scheduler.start();
@@ -40,6 +42,9 @@ public class MainBot {
 			Logger.log("Error initializing scheduler core. Exiting...");
 			System.exit(1);
 		}
+    	
+    	// Directory setup
+    	
     	
     	// Attempt to log in to bot
     	File tokenFile = new File(BotSettings.TOKEN_PATH_DEFAULT);
