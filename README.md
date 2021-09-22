@@ -1,6 +1,13 @@
 # midnight
 Full rewrite of Night Bot.
 
+## Setup
+You can download the bot's jar file from the [releases page](https://github.com/RyanAnayaMc/midnight/releases). This bot requires you to make your own Discord bot user. To do this, go to the [Discord Developer Portal](https://discord.com/developers/applications), create a new application, and set it up as a bot user. You will need to copy the bot token (do not share it with anyone!) and put it in a file called `token.dat`. Place this file in the `data/` folder, so the directory structure looks like this:
+
+(main directory)/midnight-version.jar
+
+(main directory)/data/token.dat
+
 ## Features
 Most features from my original bot are planned to be added. Some are finished, some are in progress, some haven't been started yet.
 
@@ -43,5 +50,3 @@ Administrators can download their server's JSON configuration file and tweak it 
 
 ## About
 Almost a year ago, I wrote a Discord Bot called Night Bot as a fun little personal project. This was my first time writing a bot, so many shortcuts were taken and overall the code was messy and unoptimized. There was some drastic restructuring and rewriting I wanted to do to it, but I decided to rewrite the bot from scratch because it would be easier, and I would learn Git while I was at it. Behold, the creation of midnight.
-
-No relases yet, only source code, because it's not quite cleaned up enough for that. The bot requires a certain folder structure that it does not make itself. This will be fixed later.
