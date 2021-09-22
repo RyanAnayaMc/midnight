@@ -20,9 +20,10 @@ public class JSON {
 			jsonObj = obj;
 		}
 		
-		public void write(String path) {
-			File outputFile = new File(path);
+		public void write(String directory, String filename) {
+			File outputFile = new File(directory);
 			outputFile.mkdirs();
+			outputFile = new File(directory + filename);
 			PrintWriter pw = null;
 			
 			try {

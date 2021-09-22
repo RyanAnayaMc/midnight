@@ -25,9 +25,9 @@ public class Logger {
 		
 		String logFileName = "botlog_" + year + "_" + mo + "_" + day + "_" + hr + "_" + min + "_" + sec + ".log";
 		String logFilePath = BotSettings.LOG_DIRECTORY_DEFAULT + logFileName;
+		new File(BotSettings.LOG_DIRECTORY_DEFAULT).mkdirs();
 		
 		File logFile = new File(logFilePath);
-		logFile.mkdirs();
 		System.out.println(logFilePath);
 		if (logFile.exists())
 			logFile.delete();

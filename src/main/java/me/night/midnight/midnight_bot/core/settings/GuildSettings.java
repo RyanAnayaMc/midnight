@@ -221,6 +221,6 @@ public class GuildSettings {
 	private void write() {
 		// Writes this JSON file
 		JSON.Writer writer = new JSON.Writer(jsonObj);
-		writer.write(BotSettings.GUILD_DATA_DEFAULT + GUILD_ID + ".json");
+		writer.write(BotSettings.GUILD_DATA_DEFAULT,  GUILD_ID + ".json");
 	}
 }
