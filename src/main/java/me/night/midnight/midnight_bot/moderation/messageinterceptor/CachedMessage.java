@@ -44,4 +44,8 @@ public class CachedMessage {
 	public List<File> getAttachments() {
 		return List.copyOf(attachment);
 	}
+	
+	public boolean hasAttachments() {
+		return attachment.size() > 0;
+	}
 }

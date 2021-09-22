@@ -11,6 +11,7 @@ import me.night.midnight.midnight_bot.commands.moderation.SetImgBan;
 import me.night.midnight.midnight_bot.commands.moderation.SetMsgBan;
 import me.night.midnight.midnight_bot.commands.moderation.SetVcBan;
 import me.night.midnight.midnight_bot.commands.moderation.VcBan;
+import me.night.midnight.midnight_bot.commands.moderation.ViewLog;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
@@ -37,21 +38,26 @@ public class SlashCommandHandler extends ListenerAdapter {
 		commands.add(new CommandData("msgban", "Message bans a user for a set amount of time.")
 				.addOption(OptionType.USER, "user", "The user to apply the ban to.", true)
 				.addOption(OptionType.INTEGER, "hours", "The duration in hours to ban the user.", true)
-				.addOption(OptionType.INTEGER, "minutes", "The duration in minutes to ban the user.", true));
+				.addOption(OptionType.INTEGER, "minutes", "The duration in minutes to ban the user.", true)
+				.addOption(OptionType.STRING, "reason", "Why the user is receiving this ban.", false));
 		commands.add(new CommandData("imgban", "Image bans a user for a set amount of time.")
 				.addOption(OptionType.USER, "user", "The user to apply the ban to.", true)
 				.addOption(OptionType.INTEGER, "hours", "The duration in hours to ban the user.", true)
-				.addOption(OptionType.INTEGER, "minutes", "The duration in minutes to ban the user.", true));
+				.addOption(OptionType.INTEGER, "minutes", "The duration in minutes to ban the user.", true)
+				.addOption(OptionType.STRING, "reason", "Why the user is receiving this ban.", false));
 		commands.add(new CommandData("vcban", "Voice bans a user for a set amount of time.")
 				.addOption(OptionType.USER, "user", "The user to apply the ban to.", true)
 				.addOption(OptionType.INTEGER, "hours", "The duration in hours to ban the user.", true)
-				.addOption(OptionType.INTEGER, "minutes", "The duration in minutes to ban the user.", true));
+				.addOption(OptionType.INTEGER, "minutes", "The duration in minutes to ban the user.", true)
+				.addOption(OptionType.STRING, "reason", "Why the user is receiving this ban.", false));
+		commands.add(new CommandData("viewlog", "View edited and deleted messages."));
 		slashCommands.put("setmsgban", new SetMsgBan());
 		slashCommands.put("setimgban", new SetImgBan());
 		slashCommands.put("setvcban", new SetVcBan());
 		slashCommands.put("msgban", new MsgBan());
 		slashCommands.put("imgban", new ImgBan());
 		slashCommands.put("vcban", new VcBan());
+		slashCommands.put("viewlog", new ViewLog());
 		
 		return commands;
 	}

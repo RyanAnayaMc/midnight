@@ -10,6 +10,7 @@ import me.night.midnight.midnight_bot.core.JSON;
 import me.night.midnight.midnight_bot.core.Logger;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 
 /**
@@ -60,6 +61,8 @@ public class GuildSettings {
 				.put("vcCmds",
 						new JSONArray())
 				.put("usernameChangers",
+						new JSONArray())
+				.put("msglogmods", 
 						new JSONArray())
 				.put("imageCmds",
 						new JSONObject()
@@ -143,6 +146,76 @@ public class GuildSettings {
 		jsonObj.put("modprefs", modprefs);
 		
 		write();
+	}
+	
+	/**
+	 * Retrieves an array of Members that can view the guild's message log
+	 * @return
+	 */
+	public Member[] getMsgLogMods() {
+		JSONArray jsonArr = jsonObj.getJSONArray("msglogmods");
+		Member[] members = new Member[jsonArr.length()];
+		for (int i = 0; i < jsonArr.length(); i++) {
+			long id = jsonArr.getLong(i);
+			Member mem = jda.getGuildById(GUILD_ID).retrieveMemberById(id).complete();
+			members[i] = mem;
+		}
+		
+		return members;
+	}
+	
+	/**
+	 * Returns whether or not a given user can view the message log
+	 * @param id The ID of the user to check
+	 * @return Whether or not the user can view the message log
+	 */
+	public boolean isMsgLogMod(long id) {
+		JSONArray jsonArr = jsonObj.getJSONArray("msglogmods");
+		for (int i = 0; i < jsonArr.length(); i++) {
+			long uid = jsonArr.getLong(i);
+			if (id == uid)
+				return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Lets a user view the message log
+	 * @param id The user to add
+	 * @return Whether or not the user was added
+	 */
+	public boolean addMsgLogMod(long id) {
+		if (isMsgLogMod(id))
+			return false;
+		
+		JSONArray jsonArr = jsonObj.getJSONArray("msglogmods");
+		jsonArr.put(id);
+		
+		jsonObj.put("msglogmods", jsonArr);
+		write();
+		
+		return true;
+	}
+	
+	/**
+	 * Removes a user from the message log
+	 * @param id The user to remove
+	 * @return Whether or not the user was removed
+	 */
+	public boolean removeMsgLogMod(long id) {
+		JSONArray jsonArr = jsonObj.getJSONArray("msglogmods");
+		boolean retVal = false;
+		
+		for (int i = 0; i < jsonArr.length(); i++) {
+			if (jsonArr.getLong(i) == id) {
+				jsonArr.remove(i);
+				retVal = true;
+			}
+		}
+		
+		write();
+		
+		return retVal;
 	}
 	
 	private void write() {
