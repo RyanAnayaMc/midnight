@@ -13,6 +13,9 @@ data/guild/
 # Attachments files #
 data/attachments/
 
+# Unit Testing Files
+src/test/
+
 # BlueJ files
 *.ctxt
 
