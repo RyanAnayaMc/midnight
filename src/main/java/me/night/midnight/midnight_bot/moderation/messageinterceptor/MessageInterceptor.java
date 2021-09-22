@@ -32,13 +32,16 @@ public class MessageInterceptor extends ListenerAdapter {
 		if (msg == null) {
 			eb.setAuthor("Unknown Author")
 				.addField("Server", e.getGuild().getName(), false)
+				.setThumbnail(e.getGuild().getIconUrl())
 				.addField("Channel", e.getChannel().getAsMention(), false)
 				.addField("Message", "The message was not found in the cache.", false);
 		} else {
-			eb.setAuthor("Author: " + msg.getMessage().getMember().getEffectiveName())
+			eb.setAuthor("Author: " + msg.getMessage().getMember().getEffectiveName(), msg.getMessage().getAuthor().getAvatarUrl(), msg.getMessage().getAuthor().getAvatarUrl())
+				.setThumbnail(e.getGuild().getIconUrl())
 				.addField("Server", e.getGuild().getName(), false)
-				.addField("Channel", e.getChannel().getAsMention(), false)
-				.addField("Message", msg.getMessage().getContentRaw(), false);
+				.addField("Channel", e.getChannel().getAsMention(), false);
+			if (!msg.getMessage().getContentRaw().isBlank())
+				eb.addField("Message", msg.getMessage().getContentRaw(), false);
 		}
 		
 		for (Member m : GuildSettingsHandler.getSettingsFor(e.getGuild()).getMsgLogMods()) {
@@ -46,9 +49,11 @@ public class MessageInterceptor extends ListenerAdapter {
 					ch -> {
 						ch.sendMessageEmbeds(eb.build()).queue();
 						
-						if (msg.hasAttachments())
+						if (msg != null && msg.hasAttachments()) {
+							ch.sendMessage("**Attachments**").queue();
 							for (File f : msg.getAttachments())
 								ch.sendFile(f).queue();
+						}
 						
 						ch.close().queue();
 					});
@@ -61,7 +66,8 @@ public class MessageInterceptor extends ListenerAdapter {
 		CachedMessage msg = cache.retreiveMessageById(e.getMessageIdLong());
 		EmbedBuilder eb = new EmbedBuilder()
 				.setTitle("Edited Message")
-				.setAuthor("Author: " + e.getMember().getEffectiveName())
+				.setThumbnail(e.getGuild().getIconUrl())
+				.setAuthor("Author: " + e.getMember().getEffectiveName(), e.getAuthor().getAvatarUrl(), e.getAuthor().getAvatarUrl())
 				.addField("Server", e.getGuild().getName(), false)
 				.addField("Channel", e.getChannel().getAsMention(), false)
 				.addField("Edited Message", e.getMessage().getContentRaw(), false);

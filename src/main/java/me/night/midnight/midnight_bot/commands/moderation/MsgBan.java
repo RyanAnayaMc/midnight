@@ -30,7 +30,9 @@ public class MsgBan implements SlashCommand {
 				.queue(ch -> {
 					EmbedBuilder eb = new EmbedBuilder()
 						.setTitle("✉ Message Ban Received")
-						.setAuthor("Moderator: " + e.getMember().getEffectiveName())
+						.setThumbnail(e.getGuild().getIconUrl())
+						.addField("Server", e.getGuild().getName(), false)
+						.setAuthor("Moderator: " + e.getMember().getEffectiveName(), e.getMember().getUser().getAvatarUrl(), e.getMember().getUser().getAvatarUrl())
 						.addField("Duration", String.format("%d:%02d", e.getOption("hours").getAsLong(), e.getOption("minutes").getAsLong()), false);
 					if (e.getOption("reason") != null)
 						eb.addField("Reason", e.getOption("reason").getAsString(), false);
@@ -47,7 +49,9 @@ public class MsgBan implements SlashCommand {
 				.queue(ch -> {
 					EmbedBuilder eb = new EmbedBuilder()
 						.setTitle("✉ Message Ban Received")
-						.setAuthor("Moderator: " + e.getMember().getEffectiveName())
+						.setThumbnail(e.getGuild().getIconUrl())
+						.addField("Server", e.getGuild().getName(), false)
+						.setAuthor("Moderator: " + e.getMember().getEffectiveName(), e.getMember().getUser().getAvatarUrl(), e.getMember().getUser().getAvatarUrl())
 						.addField("Duration", e.getOption("hours").getAsString() + ":" + e.getOption("minutes").getAsString(), false)
 						.addField("Note", "⚠ Error scheduling unban! Ask a moderator or admin to manually remove the ban.", false);
 					if (e.getOption("reason") != null)
