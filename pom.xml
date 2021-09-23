@@ -6,7 +6,7 @@
 
   <groupId>me.night.midnight</groupId>
   <artifactId>midnight-bot</artifactId>
-  <version>alpha-0.1</version>
+  <version>alpha-0.2</version>
 
   <name>midnight-bot</name>
   <!-- FIXME change it to the project's website -->
