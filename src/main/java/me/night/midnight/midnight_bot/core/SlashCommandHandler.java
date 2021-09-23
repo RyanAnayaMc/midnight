@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
+import me.night.midnight.midnight_bot.commands.Migrate;
 import me.night.midnight.midnight_bot.commands.Ping;
 import me.night.midnight.midnight_bot.commands.moderation.ImgBan;
 import me.night.midnight.midnight_bot.commands.moderation.MsgBan;
@@ -51,6 +52,8 @@ public class SlashCommandHandler extends ListenerAdapter {
 				.addOption(OptionType.INTEGER, "minutes", "The duration in minutes to ban the user.", true)
 				.addOption(OptionType.STRING, "reason", "Why the user is receiving this ban.", false));
 		commands.add(new CommandData("viewlog", "View edited and deleted messages."));
+		commands.add(new CommandData("migrate", "Moves all users in your voice chat to another voice chat.")
+				.addOption(OptionType.CHANNEL, "channel", "The voice channel to move to.", true));
 		slashCommands.put("setmsgban", new SetMsgBan());
 		slashCommands.put("setimgban", new SetImgBan());
 		slashCommands.put("setvcban", new SetVcBan());
@@ -58,6 +61,7 @@ public class SlashCommandHandler extends ListenerAdapter {
 		slashCommands.put("imgban", new ImgBan());
 		slashCommands.put("vcban", new VcBan());
 		slashCommands.put("viewlog", new ViewLog());
+		slashCommands.put("migrate", new Migrate());
 		
 		return commands;
 	}
