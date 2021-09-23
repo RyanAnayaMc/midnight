@@ -110,6 +110,15 @@ public class WeightedList<T> implements List<T> {
 	}
 	
 	/**
+	 * Returns the weight of an item by true index, ignoring weight
+	 * @param index The true index of the weight to get
+	 * @return The weight, or null if not found
+	 */
+	public int getWeightOf(int index) {
+		return weights.get(index);
+	}
+	
+	/**
 	 * Gets an item by index, ignoring weight.
 	 * @param index The index of the item to return
 	 * @return The item, or null if not found

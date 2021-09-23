@@ -1,11 +1,9 @@
 package me.night.midnight.midnight_bot.audio.core;
 
-import java.nio.Buffer;
 import java.nio.ByteBuffer;
-import java.util.ConcurrentModificationException;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
-import com.sedmelluq.discord.lavaplayer.track.playback.MutableAudioFrame;
+import com.sedmelluq.discord.lavaplayer.track.playback.AudioFrame;
 
 import net.dv8tion.jda.api.audio.AudioSendHandler;
 
@@ -15,39 +13,26 @@ import net.dv8tion.jda.api.audio.AudioSendHandler;
  * provide20MsAudio().
  */
 public class AudioPlayerSendHandler implements AudioSendHandler {
-  private final AudioPlayer audioPlayer;
-  private final ByteBuffer buffer;
-  private final MutableAudioFrame frame;
+	  private final AudioPlayer audioPlayer;
+	  private AudioFrame lastFrame;
 
-  /**
-   * @param audioPlayer Audio player to wrap.
-   */
-  public AudioPlayerSendHandler(AudioPlayer audioPlayer) {
-    this.audioPlayer = audioPlayer;
-    this.buffer = ByteBuffer.allocate(1024);
-    this.frame = new MutableAudioFrame();
-    this.frame.setBuffer(buffer);
-  }
+	  public AudioPlayerSendHandler(AudioPlayer audioPlayer) {
+	    this.audioPlayer = audioPlayer;
+	  }
 
-  @Override
-  public boolean canProvide() {
-    // returns true if audio was provided
-	try {
-		return audioPlayer.provide(frame);
-	} catch (ConcurrentModificationException e) {
-		return false;
+	  @Override
+	  public boolean canProvide() {
+	    lastFrame = audioPlayer.provide();
+	    return lastFrame != null;
+	  }
+
+	  @Override
+	  public ByteBuffer provide20MsAudio() {
+	    return ByteBuffer.wrap(lastFrame.getData());
+	  }
+
+	  @Override
+	  public boolean isOpus() {
+	    return true;
+	  }
 	}
-  }
-
-  @Override
-  public ByteBuffer provide20MsAudio() {
-    // flip to make it a read buffer
-    ((Buffer) buffer).flip();
-    return buffer;
-  }
-
-  @Override
-  public boolean isOpus() {
-    return true;
-  }
-}

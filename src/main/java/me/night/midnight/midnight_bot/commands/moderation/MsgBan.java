@@ -20,6 +20,13 @@ public class MsgBan implements SlashCommand {
 		
 		Role r = GuildSettingsHandler.getSettingsFor(e.getGuild()).getTextBanRole();
 		
+		if (r == null) {
+			e.reply("❌ The message ban role has not been set on this server! Ask an admin to set it with `/setmsgban`!")
+				.setEphemeral(true)
+				.queue();
+			return;
+		}
+		
 		try {
 			BanCommand.ban(e, r, BanType.TEXT_BAN);
 			e.reply("✅ Successfully added a message ban to " + e.getOption("user").getAsMember().getAsMention() + " for " + e.getOption("hours").getAsString() +

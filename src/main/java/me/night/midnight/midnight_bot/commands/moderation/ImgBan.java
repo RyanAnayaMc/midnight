@@ -19,6 +19,12 @@ public class ImgBan implements SlashCommand {
 		}
 		
 		Role r = GuildSettingsHandler.getSettingsFor(e.getGuild()).getImageBanRole();
+		if (r == null) {
+			e.reply("❌ The image ban role has not been set on this server! Ask an admin to set it with `/setimgban`!")
+				.setEphemeral(true)
+				.queue();
+			return;
+		}
 		
 		try {
 			BanCommand.ban(e, r, BanType.IMG_BAN);

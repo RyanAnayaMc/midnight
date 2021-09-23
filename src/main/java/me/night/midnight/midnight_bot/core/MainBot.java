@@ -10,6 +10,7 @@ import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.impl.StdSchedulerFactory;
 
+import me.night.midnight.midnight_bot.audio.UserIntroHandler;
 import me.night.midnight.midnight_bot.core.settings.GuildSettingsHandler;
 import me.night.midnight.midnight_bot.moderation.messageinterceptor.MessageInterceptor;
 import net.dv8tion.jda.api.JDA;
@@ -43,9 +44,6 @@ public class MainBot {
 			System.exit(1);
 		}
     	
-    	// Directory setup
-    	
-    	
     	// Attempt to log in to bot
     	File tokenFile = new File(BotSettings.TOKEN_PATH_DEFAULT);
     	BotSettings settings = new BotSettings();
@@ -76,6 +74,7 @@ public class MainBot {
 							GatewayIntent.GUILD_PRESENCES,
 							GatewayIntent.GUILD_EMOJIS)
 					.setMemberCachePolicy(MemberCachePolicy.ALL)
+					.addEventListeners(new UserIntroHandler())
 					.build();
 		} catch (LoginException e) {
 			Logger.log("Login failed! Exiting...");

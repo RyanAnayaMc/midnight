@@ -19,6 +19,12 @@ public class VcBan implements SlashCommand {
 		}
 		
 		Role r = GuildSettingsHandler.getSettingsFor(e.getGuild()).getVoiceBanRole();
+		if (r == null) {
+			e.reply("❌ The voice ban role has not been set on this server! Ask an admin to set it with `/setvcban`!")
+				.setEphemeral(true)
+				.queue();
+			return;
+		}
 		
 		try {
 			BanCommand.ban(e, r, BanType.VOICE_BAN);

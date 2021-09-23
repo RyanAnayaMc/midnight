@@ -7,6 +7,9 @@
 # Token file
 token.dat
 
+# Audio files folder
+audio/
+
 # Guild settings filies
 data/guild/
 
