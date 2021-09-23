@@ -18,6 +18,14 @@ This feature caches up to 2000 messages (will be user-definable later) locally, 
 #### Moderator Ban Commands
 This feature allows moderators to easily apply temporary bans to users. Three types of bans are supported - message bans, image bans, and voice bans. These temporarily restrict a user's ability to send messages, send embedded links/files, or join voice channels, respectively. These roles are not set up by the bot - they must be set up by the administrator. Once these roles are set up, an administrator can bind these roles to the commands with the `/setmsgban`, `/setimgban`, and `/setvcban` slash commands. Afterwards, moderators can use the `/msgban`, `/imgban`, or `/vcban` slash commands to temporarily apply one of these bans on a user for a predetermined amount of time, up to 7 days. The banned user will be notified about the ban via DMs. The bot will manage removing the role at the specified time. __Note: The role will not be removed if the bot has been restarted before the role was removed. This will be fixed in a later update.__
 
+### WIP Features
+#### Voice Chat Intros
+Configurable intro tracks that activate when a user joins a voice chat.
+- Plays a random track from a user-defined list
+- User/moderator configurable
+- Moderator manageable
+- Ignores certain voice channels
+
 ### Planned Features
 #### Automated Bot Responses
 Widely configurable automated bot responses based on a variety of conditions and triggers:
@@ -26,13 +34,6 @@ Widely configurable automated bot responses based on a variety of conditions and
 - Message was not sent by a certain user
 - Message matches a given regex
 - Ignores certain text channels
-
-#### Voice Chat Intros
-Configurable intro tracks that activate when a user joins a voice chat.
-- Plays a random track from a user-defined list
-- User/moderator configurable
-- Moderator manageable
-- Ignores certain voice channels
 
 #### Server Join Message
 Sends a customizable DM message to users who join a server.
