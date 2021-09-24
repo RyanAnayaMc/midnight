@@ -18,13 +18,12 @@ This feature caches up to 2000 messages (will be user-definable later) locally, 
 #### Moderator Ban Commands
 This feature allows moderators to easily apply temporary bans to users. Three types of bans are supported - message bans, image bans, and voice bans. These temporarily restrict a user's ability to send messages, send embedded links/files, or join voice channels, respectively. These roles are not set up by the bot - they must be set up by the administrator. Once these roles are set up, an administrator can bind these roles to the commands with the `/setmsgban`, `/setimgban`, and `/setvcban` slash commands. Afterwards, moderators can use the `/msgban`, `/imgban`, or `/vcban` slash commands to temporarily apply one of these bans on a user for a predetermined amount of time, up to 7 days. The banned user will be notified about the ban via DMs. The bot will manage removing the role at the specified time. __Note: The role will not be removed if the bot has been restarted before the role was removed. This will be fixed in a later update.__
 
-### WIP Features
 #### Voice Chat Intros
 Configurable intro tracks that activate when a user joins a voice chat.
 - Plays a random track from a user-defined list
-- User/moderator configurable
-- Moderator manageable
-- Ignores certain voice channels
+- Multiple intros can be added, and are selected randomly based on weighted probability
+- Certain intros can be locked by admins so they cannot be modified
+- Ignores certain voice channels (WIP)
 
 ### Planned Features
 #### Automated Bot Responses
@@ -48,6 +47,10 @@ Administrators can download their server's JSON configuration file and tweak it 
 [Java Discord API (JDA)](https://github.com/DV8FromTheWorld/JDA)
 
 [Quartz Scheduler](https://github.com/quartz-scheduler/quartz)
+
+[JDA-Utilities](https://github.com/JDA-Applications/JDA-Utilities/)
+
+[LavaPlayer](https://github.com/sedmelluq/lavaplayer)
 
 ## About
 Almost a year ago, I wrote a Discord Bot called Night Bot as a fun little personal project. This was my first time writing a bot, so many shortcuts were taken and overall the code was messy and unoptimized. There was some drastic restructuring and rewriting I wanted to do to it, but I decided to rewrite the bot from scratch because it would be easier, and I would learn Git while I was at it. Behold, the creation of midnight.
