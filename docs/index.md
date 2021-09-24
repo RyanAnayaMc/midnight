@@ -1,7 +1,3 @@
-# midnight
-
-Full rewrite of Night Bot, a multi-purpose Disord bot.
-
 ## Features
 ### Slash Commands
 No need to use `/help` each time you forgot what that one command was. Midnight exclusively uses slash commands for its user interactions. Discord slash commands allow users to see a list of commands supported by a bot, including easy details on what arguments a command takes and what each argument does. And don't worry - the outputs for most commands are only visible to you, so your server members can't see what commands you're running.
