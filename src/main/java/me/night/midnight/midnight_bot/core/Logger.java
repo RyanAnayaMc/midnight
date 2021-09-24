@@ -23,7 +23,7 @@ public class Logger {
 		int min = logDate.get(Calendar.MINUTE);
 		int sec = logDate.get(Calendar.SECOND);
 		
-		String logFileName = "botlog_" + year + "_" + mo + "_" + day + "_" + hr + "_" + min + "_" + sec + ".log";
+		String logFileName = String.format("botlog_%4d_%2d_%2d_%2d_%02d_%02d.log", year, mo, day, hr, min, sec);
 		String logFilePath = BotSettings.LOG_DIRECTORY_DEFAULT + logFileName;
 		new File(BotSettings.LOG_DIRECTORY_DEFAULT).mkdirs();
 		
@@ -54,7 +54,7 @@ public class Logger {
 		int min = logDate.get(Calendar.MINUTE);
 		int sec = logDate.get(Calendar.SECOND);
 		
-		String time = year + "/" + mo + "/" + day + " " + hr + ":" + min + ":" + sec + " ";
+		String time = String.format("%d/%d/%d %d:%02d:%02d ", year, mo, day, hr, min, sec);
 		
 		pw.write(time + event + "\n");
 		System.out.println(time + event);

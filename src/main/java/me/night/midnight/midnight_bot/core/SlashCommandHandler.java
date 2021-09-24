@@ -4,7 +4,15 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
+import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
+
+import me.night.midnight.midnight_bot.audio.AddIntro;
+import me.night.midnight.midnight_bot.audio.AddOutro;
+import me.night.midnight.midnight_bot.audio.EditIntro;
+import me.night.midnight.midnight_bot.audio.EditOutro;
 import me.night.midnight.midnight_bot.audio.ListIntros;
+import me.night.midnight.midnight_bot.audio.RemoveIntro;
+import me.night.midnight.midnight_bot.audio.RemoveOutro;
 import me.night.midnight.midnight_bot.commands.Migrate;
 import me.night.midnight.midnight_bot.commands.Ping;
 import me.night.midnight.midnight_bot.commands.moderation.ImgBan;
@@ -31,6 +39,9 @@ public class SlashCommandHandler extends ListenerAdapter {
 	public void getSlashCommands() {
 		slashCommands = new Hashtable<String, SlashCommand>();
 		List<SlashCommand> cmds = new ArrayList<SlashCommand>();
+		EventWaiter waiter = new EventWaiter();
+		
+		jda.addEventListener(waiter);
 		
 		cmds.add(new Ping());
 		cmds.add(new SetMsgBan());
@@ -42,12 +53,24 @@ public class SlashCommandHandler extends ListenerAdapter {
 		cmds.add(new ViewLog());
 		cmds.add(new Migrate());
 		cmds.add(new ListIntros());
+		cmds.add(new AddIntro(waiter));
+		cmds.add(new AddOutro(waiter));
+		cmds.add(new RemoveIntro());
+		cmds.add(new RemoveOutro());
+		cmds.add(new EditIntro());
+		cmds.add(new EditOutro());
+		
+		List<CommandData> cmdData = new ArrayList<CommandData>();
 		
 		for (SlashCommand cmd : cmds) {
-			for (Guild g : jda.getGuilds())
-				g.updateCommands().addCommands(cmd.getCommandData()).queue();
+			cmdData.add(cmd.getCommandData());
 			slashCommands.put(cmd.getName(), cmd);
 		}
+		
+		jda.updateCommands().queue();
+		
+		for (Guild g : jda.getGuilds())
+			g.updateCommands().addCommands(cmdData).queue();
 	}
 	
 	@Override

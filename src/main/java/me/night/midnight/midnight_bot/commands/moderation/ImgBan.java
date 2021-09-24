@@ -75,7 +75,7 @@ public class ImgBan implements SlashCommand {
 				.addOption(OptionType.USER, "user", "The user to apply the ban to.", true)
 				.addOption(OptionType.INTEGER, "hours", "The duration in hours to ban the user.", true)
 				.addOption(OptionType.INTEGER, "minutes", "The duration in minutes to ban the user.", true)
-				.addOption(OptionType.STRING, "reason", "Why the user is receiving this ban.", false)
+				.addOption(OptionType.STRING, "reason", "Why the user is receiving this ban.", false);
 	}
 
 	@Override

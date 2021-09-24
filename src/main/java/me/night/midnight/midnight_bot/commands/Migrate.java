@@ -49,7 +49,7 @@ public class Migrate implements SlashCommand {
 	@Override
 	public CommandData getCommandData() {
 		return new CommandData(name, "Moves all users in your voice chat to another voice chat.")
-				.addOption(OptionType.CHANNEL, "channel", "The voice channel to move to.", true)
+				.addOption(OptionType.CHANNEL, "channel", "The voice channel to move to.", true);
 	}
 
 	@Override

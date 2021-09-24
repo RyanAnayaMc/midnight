@@ -8,16 +8,16 @@
 token.dat
 
 # Audio files folder
-audio/
+/audio/
 
 # Guild settings filies
-data/guild/
+/data/guild/
 
 # Attachments files #
-data/attachments/
+/data/attachments/
 
 # Unit Testing Files
-src/test/
+/src/test/
 
 # BlueJ files
 *.ctxt

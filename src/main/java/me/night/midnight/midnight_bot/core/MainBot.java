@@ -17,7 +17,6 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 
@@ -97,10 +96,9 @@ public class MainBot {
         
         // Configure slash commands
         SlashCommandHandler slashCmds = new SlashCommandHandler(jda);
-       	for (Guild g : jda.getGuilds())
-        	g.updateCommands().addCommands(slashCmds.getSlashCommands()).queue();
+       	slashCmds.getSlashCommands();
         	
-        	//jda.upsertCommand(cmd);
+        //jda.upsertCommand(cmd);
         jda.addEventListener(slashCmds);
         jda.addEventListener(new MessageInterceptor());
         

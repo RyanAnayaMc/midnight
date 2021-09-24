@@ -49,7 +49,7 @@ public class IntroDetail {
 	 */
 	public IntroDetail(String p, int vol, boolean admin, ExtraAction...actions) {
 		path = p;
-		volume = Math.max(0, vol);
+		volume = Math.max(0, Math.min(vol, 500));
 		extraActions = actions;
 		adminOnly = admin;
 		IS_BLANK = false;

@@ -62,6 +62,9 @@ public class MessageInterceptor extends ListenerAdapter {
 	
 	@Override
 	public void onGuildMessageUpdate(GuildMessageUpdateEvent e) {
+		if (e.getMember().getUser().isBot())
+			return;
+		
 		// Try to retreive message from the cache
 		CachedMessage msg = cache.retreiveMessageById(e.getMessageIdLong());
 		EmbedBuilder eb = new EmbedBuilder()
