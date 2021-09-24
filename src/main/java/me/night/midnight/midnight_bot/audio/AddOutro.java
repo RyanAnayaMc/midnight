@@ -91,7 +91,7 @@ public class AddOutro implements SlashCommand {
 
 	@Override
 	public CommandData getCommandData() {
-		return new CommandData(name, "Add a new intro for this server.")
+		return new CommandData(name, "Add a new outro for this server.")
 				.addOption(OptionType.INTEGER, "volume", "The volume to play the outro at.", true)
 				.addOption(OptionType.INTEGER, "weight", "The weight for this outro. Higher weight means higher probability of this outro playing.", true);
 	}

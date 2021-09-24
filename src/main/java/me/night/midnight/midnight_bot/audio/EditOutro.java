@@ -16,7 +16,7 @@ public class EditOutro implements SlashCommand {
 	
 	@Override
 	public CommandData getCommandData() {
-		return new CommandData(name, "Edit the volume and weight of an intro")
+		return new CommandData(name, "Edit the volume and weight of an outro")
 					.addOption(OptionType.INTEGER, "index", "The outro to edit", true)
 					.addOption(OptionType.INTEGER, "newvol", "The new volume of the outro")
 					.addOption(OptionType.INTEGER, "newweight", "The new weight of the outro");
