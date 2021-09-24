@@ -1,6 +1,5 @@
 package me.night.midnight.midnight_bot.audio;
 
-import me.night.midnight.midnight_bot.audio.IntroDetail.ExtraAction;
 import me.night.midnight.midnight_bot.core.SlashCommand;
 import me.night.midnight.midnight_bot.core.settings.GuildSettings;
 import me.night.midnight.midnight_bot.core.settings.GuildSettingsHandler;
