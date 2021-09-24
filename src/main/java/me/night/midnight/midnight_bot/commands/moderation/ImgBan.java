@@ -6,19 +6,25 @@ import me.night.midnight.midnight_bot.core.SlashCommand;
 import me.night.midnight.midnight_bot.core.settings.GuildSettingsHandler;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.interactions.commands.build.CommandData;
+import net.dv8tion.jda.api.requests.restaction.interactions.ReplyAction;
 
 public class ImgBan implements SlashCommand {
-
+	private String name = "imgban";
+	
 	@Override
-	public void run(SlashCommandEvent e) {
-		if (!e.getMember().hasPermission(Permission.MESSAGE_MANAGE)) {
-			e.reply("❌ You must be a moderator to run this command!").queue();
+	public void run(SlashCommandEvent e) {		
+		Role r = GuildSettingsHandler.getSettingsFor(e.getGuild()).getImageBanRole();
+		if (r == null) {
+			e.reply("❌ The image ban role has not been set on this server! Ask an admin to set it with `/setimgban`!")
+				.setEphemeral(true)
+				.queue();
 			return;
 		}
-		
-		Role r = GuildSettingsHandler.getSettingsFor(e.getGuild()).getImageBanRole();
 		
 		try {
 			BanCommand.ban(e, r, BanType.IMG_BAN);
@@ -61,6 +67,29 @@ public class ImgBan implements SlashCommand {
 					ch.close().queue();
 				});
 		}
+	}
+
+	@Override
+	public CommandData getCommandData() {
+		return new CommandData(name, "Image bans a user for a set amount of time.")
+				.addOption(OptionType.USER, "user", "The user to apply the ban to.", true)
+				.addOption(OptionType.INTEGER, "hours", "The duration in hours to ban the user.", true)
+				.addOption(OptionType.INTEGER, "minutes", "The duration in minutes to ban the user.", true)
+				.addOption(OptionType.STRING, "reason", "Why the user is receiving this ban.", false);
+	}
+
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	@Override
+	public boolean checkPermissions(Member m, ReplyAction reply) {
+		if (!m.hasPermission(Permission.MESSAGE_MANAGE)) {
+			reply.setContent("❌ You must be a moderator to run this command!").queue();
+			return false;
+		}
+		return true;
 	}
 
 }

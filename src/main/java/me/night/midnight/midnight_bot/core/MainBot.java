@@ -10,13 +10,13 @@ import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.impl.StdSchedulerFactory;
 
+import me.night.midnight.midnight_bot.audio.UserIntroHandler;
 import me.night.midnight.midnight_bot.core.settings.GuildSettingsHandler;
 import me.night.midnight.midnight_bot.moderation.messageinterceptor.MessageInterceptor;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 
@@ -42,9 +42,6 @@ public class MainBot {
 			Logger.log("Error initializing scheduler core. Exiting...");
 			System.exit(1);
 		}
-    	
-    	// Directory setup
-    	
     	
     	// Attempt to log in to bot
     	File tokenFile = new File(BotSettings.TOKEN_PATH_DEFAULT);
@@ -76,6 +73,7 @@ public class MainBot {
 							GatewayIntent.GUILD_PRESENCES,
 							GatewayIntent.GUILD_EMOJIS)
 					.setMemberCachePolicy(MemberCachePolicy.ALL)
+					.addEventListeners(new UserIntroHandler())
 					.build();
 		} catch (LoginException e) {
 			Logger.log("Login failed! Exiting...");
@@ -97,11 +95,10 @@ public class MainBot {
 		}
         
         // Configure slash commands
-        SlashCommandHandler slashCmds = new SlashCommandHandler();
-       	for (Guild g : jda.getGuilds())
-        	g.updateCommands().addCommands(slashCmds.getSlashCommands()).queue();
+        SlashCommandHandler slashCmds = new SlashCommandHandler(jda);
+       	slashCmds.getSlashCommands();
         	
-        	//jda.upsertCommand(cmd);
+        //jda.upsertCommand(cmd);
         jda.addEventListener(slashCmds);
         jda.addEventListener(new MessageInterceptor());
         

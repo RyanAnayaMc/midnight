@@ -34,8 +34,7 @@ public class JSON {
 				System.out.println("Failed opening and creating file! Exiting...");
 				System.exit(0);
 			}
-			
-			pw.write(jsonObj.toString());
+			pw.write(jsonObj.toString(5));
 			pw.close();
 		}
 	}
