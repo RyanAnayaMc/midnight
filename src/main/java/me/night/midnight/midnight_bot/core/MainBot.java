@@ -96,7 +96,7 @@ public class MainBot {
 		}
         
         // Configure slash commands
-        SlashCommandHandler slashCmds = new SlashCommandHandler();
+        SlashCommandHandler slashCmds = new SlashCommandHandler(jda);
        	for (Guild g : jda.getGuilds())
         	g.updateCommands().addCommands(slashCmds.getSlashCommands()).queue();
         	

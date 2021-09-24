@@ -1,13 +1,10 @@
 package me.night.midnight.midnight_bot.audio;
 
-import java.util.concurrent.TimeUnit;
-
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 
-import me.night.midnight.midnight_bot.audio.IntroDetail.ExtraAction;
 import me.night.midnight.midnight_bot.audio.core.GuildMusicManager;
 import me.night.midnight.midnight_bot.audio.core.PlayerManager;
 import me.night.midnight.midnight_bot.core.Logger;
@@ -56,9 +53,6 @@ public class UserIntroHandler extends ListenerAdapter {
 		if (audioManager.isConnected())
 			return;
 		
-		// Join the voice channel
-		audioManager.openAudioConnection(vc);
-		
 		// Check if user has intros
 		if (sounds.isEmpty())
 			return;
@@ -68,6 +62,10 @@ public class UserIntroHandler extends ListenerAdapter {
 		
 		if (play.isBlank())
 			return;
+		
+		// Join the voice channel
+		audioManager.openAudioConnection(vc);
+		Logger.log("Joined voice chat " + vc.getName() + " in server " + e.getGuild().getName());
 		
 		// Set volume and play
 		musicManager.player.setVolume(play.getVolume());

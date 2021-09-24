@@ -14,61 +14,40 @@ import me.night.midnight.midnight_bot.commands.moderation.SetMsgBan;
 import me.night.midnight.midnight_bot.commands.moderation.SetVcBan;
 import me.night.midnight.midnight_bot.commands.moderation.VcBan;
 import me.night.midnight.midnight_bot.commands.moderation.ViewLog;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 
 public class SlashCommandHandler extends ListenerAdapter {
-	Hashtable<String, SlashCommand> slashCommands;
+	private Hashtable<String, SlashCommand> slashCommands;
+	private JDA jda;
 	
-	public List<CommandData> getSlashCommands() {
+	public SlashCommandHandler(JDA jda) {
+		this.jda = jda;
+	}
+	
+	public void getSlashCommands() {
 		slashCommands = new Hashtable<String, SlashCommand>();
-		List<CommandData> commands = new ArrayList<CommandData>();
+		List<SlashCommand> cmds = new ArrayList<SlashCommand>();
 		
-		// Ping command
-		commands.add(new CommandData("ping", "Pings the bot. Returns response time in ms."));
-		slashCommands.put("ping", new Ping());
+		cmds.add(new Ping());
+		cmds.add(new SetMsgBan());
+		cmds.add(new SetImgBan());
+		cmds.add(new SetVcBan());
+		cmds.add(new MsgBan());
+		cmds.add(new ImgBan());
+		cmds.add(new VcBan());
+		cmds.add(new ViewLog());
+		cmds.add(new Migrate());
+		cmds.add(new ListIntros());
 		
-		// Set ban commands
-		commands.add(new CommandData("setmsgban", "Sets the role used by /msgban")
-				.addOption(OptionType.ROLE, "role", "The message ban role.", true));
-		commands.add(new CommandData("setimgban", "Sets the role used by /imgban")
-				.addOption(OptionType.ROLE, "role", "The image ban role.", true));
-		commands.add(new CommandData("setvcban", "Sets the role used by /vcban")
-				.addOption(OptionType.ROLE, "role", "The voice ban role.", true));
-		commands.add(new CommandData("msgban", "Message bans a user for a set amount of time.")
-				.addOption(OptionType.USER, "user", "The user to apply the ban to.", true)
-				.addOption(OptionType.INTEGER, "hours", "The duration in hours to ban the user.", true)
-				.addOption(OptionType.INTEGER, "minutes", "The duration in minutes to ban the user.", true)
-				.addOption(OptionType.STRING, "reason", "Why the user is receiving this ban.", false));
-		commands.add(new CommandData("imgban", "Image bans a user for a set amount of time.")
-				.addOption(OptionType.USER, "user", "The user to apply the ban to.", true)
-				.addOption(OptionType.INTEGER, "hours", "The duration in hours to ban the user.", true)
-				.addOption(OptionType.INTEGER, "minutes", "The duration in minutes to ban the user.", true)
-				.addOption(OptionType.STRING, "reason", "Why the user is receiving this ban.", false));
-		commands.add(new CommandData("vcban", "Voice bans a user for a set amount of time.")
-				.addOption(OptionType.USER, "user", "The user to apply the ban to.", true)
-				.addOption(OptionType.INTEGER, "hours", "The duration in hours to ban the user.", true)
-				.addOption(OptionType.INTEGER, "minutes", "The duration in minutes to ban the user.", true)
-				.addOption(OptionType.STRING, "reason", "Why the user is receiving this ban.", false));
-		commands.add(new CommandData("viewlog", "View edited and deleted messages."));
-		commands.add(new CommandData("migrate", "Moves all users in your voice chat to another voice chat.")
-				.addOption(OptionType.CHANNEL, "channel", "The voice channel to move to.", true));
-		commands.add(new CommandData("listintros", "Lists all of your intros."));
-		slashCommands.put("setmsgban", new SetMsgBan());
-		slashCommands.put("setimgban", new SetImgBan());
-		slashCommands.put("setvcban", new SetVcBan());
-		slashCommands.put("msgban", new MsgBan());
-		slashCommands.put("imgban", new ImgBan());
-		slashCommands.put("vcban", new VcBan());
-		slashCommands.put("viewlog", new ViewLog());
-		slashCommands.put("migrate", new Migrate());
-		slashCommands.put("listintros", new ListIntros());
-		
-		// TODO Migrate some of SlashCommandHandler's responsibilities to SlashCommand interface
-		
-		return commands;
+		for (SlashCommand cmd : cmds) {
+			for (Guild g : jda.getGuilds())
+				g.updateCommands().addCommands(cmd.getCommandData()).queue();
+			slashCommands.put(cmd.getName(), cmd);
+		}
 	}
 	
 	@Override
@@ -80,6 +59,6 @@ public class SlashCommandHandler extends ListenerAdapter {
 		if (cmd == null)
 			Logger.log("Error! This command does not exist!");
 		else
-			cmd.run(e);
+			cmd.execute(e);
 	}
 }
