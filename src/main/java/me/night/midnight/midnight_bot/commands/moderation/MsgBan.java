@@ -1,7 +1,11 @@
 package me.night.midnight.midnight_bot.commands.moderation;
 
+// SlashCommand to administer a message ban
+// Requires moderator (Manage Messages permission)
+
 import org.quartz.SchedulerException;
 
+import me.night.midnight.midnight_bot.core.Emojis;
 import me.night.midnight.midnight_bot.core.SlashCommand;
 import me.night.midnight.midnight_bot.core.settings.GuildSettingsHandler;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -18,25 +22,27 @@ public class MsgBan implements SlashCommand {
 	
 	@Override
 	public void run(SlashCommandEvent e) {
+		// Get the message ban role
 		Role r = GuildSettingsHandler.getSettingsFor(e.getGuild()).getTextBanRole();
 		
 		if (r == null) {
-			e.reply("❌ The message ban role has not been set on this server! Ask an admin to set it with `/setmsgban`!")
+			e.reply(Emojis.ERROR + " The message ban role has not been set on this server! Ask an admin to set it with `/setmsgban`!")
 				.setEphemeral(true)
 				.queue();
 			return;
 		}
 		
+		// Administer the ban and unban then DM the user their ban details
 		try {
 			BanCommand.ban(e, r, BanType.TEXT_BAN);
-			e.reply("✅ Successfully added a message ban to " + e.getOption("user").getAsMember().getAsMention() + " for " + e.getOption("hours").getAsString() +
+			e.reply(Emojis.SUCCESS + " Successfully added a message ban to " + e.getOption("user").getAsMember().getAsMention() + " for " + e.getOption("hours").getAsString() +
 					" hours and "+ e.getOption("minutes").getAsString() + " minutes.")
 				.setEphemeral(true)
 				.queue();
 			e.getOption("user").getAsUser().openPrivateChannel()
 				.queue(ch -> {
 					EmbedBuilder eb = new EmbedBuilder()
-						.setTitle("✉ Message Ban Received")
+						.setTitle(Emojis.MSG + " Message Ban Received")
 						.setThumbnail(e.getGuild().getIconUrl())
 						.addField("Server", e.getGuild().getName(), false)
 						.setAuthor("Moderator: " + e.getMember().getEffectiveName(), e.getMember().getUser().getAvatarUrl(), e.getMember().getUser().getAvatarUrl())
@@ -48,19 +54,19 @@ public class MsgBan implements SlashCommand {
 					ch.close().queue();
 				});
 		} catch (SchedulerException e1) {
-			e.reply("⚠ Successfully added a message ban to " + e.getOption("user").getAsMember().getAsMention() + ", but scheduling the unban failed." +
+			e.reply(Emojis.WARN + " Successfully added a message ban to " + e.getOption("user").getAsMember().getAsMention() + ", but scheduling the unban failed." +
 					" You will need to manually unban this user.")
 				.setEphemeral(true)
 				.queue();
 			e.getOption("user").getAsUser().openPrivateChannel()
 				.queue(ch -> {
 					EmbedBuilder eb = new EmbedBuilder()
-						.setTitle("✉ Message Ban Received")
+						.setTitle(Emojis.MSG + " Message Ban Received")
 						.setThumbnail(e.getGuild().getIconUrl())
 						.addField("Server", e.getGuild().getName(), false)
 						.setAuthor("Moderator: " + e.getMember().getEffectiveName(), e.getMember().getUser().getAvatarUrl(), e.getMember().getUser().getAvatarUrl())
 						.addField("Duration", e.getOption("hours").getAsString() + ":" + e.getOption("minutes").getAsString(), false)
-						.addField("Note", "⚠ Error scheduling unban! Ask a moderator or admin to manually remove the ban.", false);
+						.addField("Note", Emojis.WARN + " Error scheduling unban! Ask a moderator or admin to manually remove the ban.", false);
 					if (e.getOption("reason") != null)
 						eb.addField("Reason", e.getOption("reason").getAsString(), false);
 					
@@ -82,7 +88,7 @@ public class MsgBan implements SlashCommand {
 	@Override
 	public boolean checkPermissions(Member m, ReplyAction reply) {
 		if (!m.hasPermission(Permission.MESSAGE_MANAGE)) {
-			reply.setContent("❌ You must be a moderator to run this command!").setEphemeral(true).queue();
+			reply.setContent(Emojis.ERROR + " You must be a moderator to run this command!").setEphemeral(true).queue();
 			return false;
 		}
 		return true;

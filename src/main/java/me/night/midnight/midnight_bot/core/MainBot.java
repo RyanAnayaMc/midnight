@@ -23,14 +23,13 @@ import net.dv8tion.jda.api.utils.MemberCachePolicy;
 /**
  * The code that handles the actual setup and startup of the bot
  * @author night
- * TODO take configuration from json file
  */
 
 public class MainBot {
 	private static Scheduler scheduler;
 	private static JDA jda;
 	
-    public static void main( String[] args ) {
+    public static void main(String[] args ) {
     	// Perform initial setup
     	Logger.setupLogger(); // Logger setup
     	
@@ -48,6 +47,7 @@ public class MainBot {
     	BotSettings settings = new BotSettings();
     	settings.readSettings();
     	
+    	// Get the token
     	Scanner tokenScanner = null;
 		try {
 			tokenScanner = new Scanner(tokenFile);
@@ -87,6 +87,7 @@ public class MainBot {
         			Activity.watching("hentai and listening to heavy metal")
         		);
         
+        // Wait for bot to finish starting up
         try {
 			jda.awaitReady();
 		} catch (InterruptedException e) {
@@ -105,10 +106,18 @@ public class MainBot {
     	GuildSettingsHandler.retrieveSettings(jda);
     }
     
+    /**
+     * Gets the bot's Scheduler
+     * @return the Scheduler
+     */
     public static Scheduler getScheduler() {
     	return scheduler;
     }
     
+    /**
+     * Gets the bot's JDA object
+     * @return the JDA
+     */
     public static JDA getJDA() {
     	return jda;
     }

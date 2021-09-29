@@ -5,6 +5,9 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 
 /**
  * Holder for both the player and a track scheduler for one guild.
+ * @version 1.0.0
+ * @see TrackScheduler
+ * @see AudioPlayerSendHandler
  */
 public class GuildMusicManager {
   /**

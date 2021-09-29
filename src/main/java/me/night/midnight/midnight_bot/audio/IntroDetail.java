@@ -6,6 +6,21 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Data structure that holds the details for a user intro or outro. Holds the local relative path to
+ * the audio file, the volume to play it at, whether or not it can only be edited by admins, and
+ * extra actions to execute after the intro plays. May also be blank.
+ * @author night
+ * @version 1.0.0
+ * @see AddIntro
+ * @see AddOutro
+ * @see EditIntro
+ * @see EditOutro
+ * @see ListIntros
+ * @see RemoveIntro
+ * @see RemoveOutro
+ * @see UserIntroHandler
+ */
 public class IntroDetail {
 	private String path;
 	private int volume;

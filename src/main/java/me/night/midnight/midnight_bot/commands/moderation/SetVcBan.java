@@ -1,5 +1,10 @@
 package me.night.midnight.midnight_bot.commands.moderation;
 
+import me.night.midnight.midnight_bot.core.Emojis;
+
+// SlashCommand to set the Voice Ban role in a server
+// Requires administrator
+
 import me.night.midnight.midnight_bot.core.SlashCommand;
 import me.night.midnight.midnight_bot.core.settings.GuildSettings;
 import me.night.midnight.midnight_bot.core.settings.GuildSettingsHandler;
@@ -22,7 +27,7 @@ public class SetVcBan implements SlashCommand {
 		
 		gs.setVoiceBanRole(r);
 		
-		e.reply("✅ Successfully set the voice ban role for this server!").queue();
+		e.reply(Emojis.SUCCESS + " Successfully set the voice ban role for this server!").queue();
 	}
 
 	@Override
@@ -34,7 +39,7 @@ public class SetVcBan implements SlashCommand {
 	@Override
 	public boolean checkPermissions(Member m, ReplyAction reply) {
 		if (!m.hasPermission(Permission.ADMINISTRATOR)) {
-			reply.setContent("❌ You must be an administrator to run this command!").setEphemeral(true).queue();
+			reply.setContent(Emojis.ERROR + " You must be an administrator to run this command!").setEphemeral(true).queue();
 			return false;
 		}
 		return true;

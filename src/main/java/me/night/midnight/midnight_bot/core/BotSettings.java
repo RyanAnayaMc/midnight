@@ -1,5 +1,7 @@
 package me.night.midnight.midnight_bot.core;
 
+// Class that handles global settings for the bot
+
 import java.io.FileNotFoundException;
 
 import org.json.JSONException;
@@ -42,6 +44,10 @@ public class BotSettings {
 		}
 	}
 	
+	/**
+	 * Gets a default JSONObject for the configuration
+	 * @return the JSONObject for a detault configuration
+	 */
 	private JSONObject getDefaultConfig() {
 		JSONObject jsonObj = new JSONObject();
 		jsonObj.put("tokenPath", TOKEN_PATH_DEFAULT)

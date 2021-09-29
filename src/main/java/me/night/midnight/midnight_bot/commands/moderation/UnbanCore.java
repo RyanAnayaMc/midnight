@@ -1,5 +1,7 @@
 package me.night.midnight.midnight_bot.commands.moderation;
 
+// Class that schedules unban events using Quartz Scheduler
+
 import static org.quartz.JobBuilder.newJob;
 import static org.quartz.TriggerBuilder.newTrigger;
 

@@ -1,5 +1,7 @@
 package me.night.midnight.midnight_bot.core;
 
+// Basis for SlashCommands
+
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;

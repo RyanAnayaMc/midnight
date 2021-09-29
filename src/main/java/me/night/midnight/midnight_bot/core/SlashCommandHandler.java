@@ -1,5 +1,7 @@
 package me.night.midnight.midnight_bot.core;
 
+// Class that handles SlashCommands
+
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -32,17 +34,27 @@ public class SlashCommandHandler extends ListenerAdapter {
 	private Hashtable<String, SlashCommand> slashCommands;
 	private JDA jda;
 	
+	/**
+	 * Creates a new SlashCommandHandler with the given JDA.
+	 * Do not make more than one since it will cause issues!
+	 * @param jda
+	 */
 	public SlashCommandHandler(JDA jda) {
 		this.jda = jda;
 	}
 	
+	/**
+	 * Registers all SlashCommands to the bot
+	 */
 	public void getSlashCommands() {
 		slashCommands = new Hashtable<String, SlashCommand>();
 		List<SlashCommand> cmds = new ArrayList<SlashCommand>();
 		EventWaiter waiter = new EventWaiter();
 		
+		// Add an EventWaiter to the bot
 		jda.addEventListener(waiter);
 		
+		// Add all the commands to the list
 		cmds.add(new Ping());
 		cmds.add(new SetMsgBan());
 		cmds.add(new SetImgBan());
@@ -60,6 +72,7 @@ public class SlashCommandHandler extends ListenerAdapter {
 		cmds.add(new EditIntro());
 		cmds.add(new EditOutro());
 		
+		// Get CommandData from all the SlashCommands
 		List<CommandData> cmdData = new ArrayList<CommandData>();
 		
 		for (SlashCommand cmd : cmds) {
@@ -67,8 +80,10 @@ public class SlashCommandHandler extends ListenerAdapter {
 			slashCommands.put(cmd.getName(), cmd);
 		}
 		
+		// Clear global commands
 		jda.updateCommands().queue();
 		
+		// Add commands to each server
 		for (Guild g : jda.getGuilds())
 			g.updateCommands().addCommands(cmdData).queue();
 	}

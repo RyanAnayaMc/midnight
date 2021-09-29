@@ -1,5 +1,10 @@
 package me.night.midnight.midnight_bot.commands.moderation;
 
+import me.night.midnight.midnight_bot.core.Emojis;
+
+// SlashCommand to set the Image Ban role
+// Requires administrator
+
 import me.night.midnight.midnight_bot.core.SlashCommand;
 import me.night.midnight.midnight_bot.core.settings.GuildSettings;
 import me.night.midnight.midnight_bot.core.settings.GuildSettingsHandler;
@@ -21,7 +26,7 @@ public class SetImgBan implements SlashCommand {
 		Role r = e.getOption("role").getAsRole();
 		
 		gs.setImageBanRole(r);
-		e.reply("✅ Successfully set the image ban role for this server!").queue();
+		e.reply(Emojis.SUCCESS + " Successfully set the image ban role for this server!").queue();
 	}
 
 	@Override
@@ -33,7 +38,7 @@ public class SetImgBan implements SlashCommand {
 	@Override
 	public boolean checkPermissions(Member m, ReplyAction reply) {
 		if (!m.hasPermission(Permission.ADMINISTRATOR)) {
-			reply.setContent("❌ You must be an administrator to run this command!").setEphemeral(true).queue();
+			reply.setContent(Emojis.ERROR + " You must be an administrator to run this command!").setEphemeral(true).queue();
 			return false;
 		}
 		return true;

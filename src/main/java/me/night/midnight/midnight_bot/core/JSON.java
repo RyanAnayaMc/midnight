@@ -1,5 +1,7 @@
 package me.night.midnight.midnight_bot.core;
 
+// Class that handles interchanging local .json files and org.json.JSONObject objects
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -14,15 +16,23 @@ public class JSON {
 		
 		/**
 		 * Creates a new JSON.Writer from the given JSONObject
-		 * @param obj The JSONObject ot use
+		 * @param obj The JSONObject to use
 		 */
 		public Writer(JSONObject obj) {
 			jsonObj = obj;
 		}
 		
+		/**
+		 * Writes the JSONObject to a file
+		 * @param directory The folder to save the file in
+		 * @param filename The filename for the JSONObject
+		 */
 		public void write(String directory, String filename) {
+			// Make the directory
 			File outputFile = new File(directory);
 			outputFile.mkdirs();
+			
+			// Make the file
 			outputFile = new File(directory + filename);
 			PrintWriter pw = null;
 			
@@ -34,6 +44,8 @@ public class JSON {
 				System.out.println("Failed opening and creating file! Exiting...");
 				System.exit(0);
 			}
+			
+			// Perform write operation
 			pw.write(jsonObj.toString(5));
 			pw.close();
 		}
@@ -65,10 +77,18 @@ public class JSON {
 			jsonScanner.close();
 		}
 		
+		/**
+		 * Returns the raw String read from the JSON file
+		 * @return
+		 */
 		public String getJsonString() {
 			return jsonString;
 		}
 		
+		/**
+		 * Get the JSONObject read from the file
+		 * @return
+		 */
 		public JSONObject getJsonObj() {
 			return jsonObj;
 		}

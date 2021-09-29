@@ -19,6 +19,14 @@ import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.managers.AudioManager;
 
+/**
+ * A class that handles user intros. When a member joins, that user's intros are retreived as a
+ * {@link WeightedList} and a random {@link IntroDetail} is retreived from it. The bot then joins
+ * the intro plays. A similar process happens for outros.
+ * @author night
+ * @version 1.0.0
+ * @see IntroDetail
+ */
 public class UserIntroHandler extends ListenerAdapter {
 	@Override
 	public void onGuildVoiceJoin(GuildVoiceJoinEvent e) {
@@ -30,6 +38,12 @@ public class UserIntroHandler extends ListenerAdapter {
 		execute(e, e.getChannelLeft(), false);
 	}
 	
+	/**
+	 * Plays a user intro or outro if possible
+	 * @param e The event from when the user joined or left
+	 * @param vc The voice chat that was joined or left
+	 * @param isIntro Whether or not an intro will be played
+	 */
 	public void execute(GenericGuildVoiceEvent e, VoiceChannel vc, boolean isIntro) {
 		// If user is bot, ignore
 		if (e.getMember().getUser().isBot())

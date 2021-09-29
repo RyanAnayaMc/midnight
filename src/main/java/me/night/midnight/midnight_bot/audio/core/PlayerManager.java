@@ -13,6 +13,13 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 
 import net.dv8tion.jda.api.entities.Guild;
 
+/**
+ * Class to handle playing audio. Handles queueing up new audio tracks. Heavily simplified
+ * to not use a queue and instead just play a track on demand.
+ * @version 1.0.0
+ * @see GuildMusicManager
+ *
+ */
 public class PlayerManager {
 	private static PlayerManager instance;
 	private final AudioPlayerManager PLAYER_MANAGER;
@@ -46,7 +53,6 @@ public class PlayerManager {
 		PLAYER_MANAGER.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() {
 			@Override
 			public void trackLoaded(AudioTrack track) {
-				// c.sendMessage(songInfo(track, "✔ Song Queued", false).build()).queue();
 				play(musicManager, track);
 			}
 			
@@ -57,12 +63,10 @@ public class PlayerManager {
 			
 			@Override
 			public void noMatches() {
-				// c.sendMessage("❌ Nothing found at `" + trackUrl + "`!").queue();
 			}
 			
 			@Override
 			public void loadFailed(FriendlyException exception) {
-				// c.sendMessage("❌ Could not play: `" + exception.getMessage() + "`").queue();
 			}
 		});
 	}
@@ -77,23 +81,6 @@ public class PlayerManager {
 		
 		return instance;
 	}
-	
-	/*
-	public static EmbedBuilder songInfo(AudioTrack track, String title, boolean showCurrentTime) {
-		EmbedBuilder info = new EmbedBuilder();
-		info.setColor(0xAA00FF);
-		info.setAuthor("『 Night Bot ♪ 』", null, BotParameters.getBotAvatarUrl());
-		info.setTitle(title);
-		info.addField("🎵 Name", track.getInfo().title, false);
-		info.addField("👤 Channel", track.getInfo().author, true);
-		if (showCurrentTime)
-			info.addField("⌚ Time", msToProperTime(track.getPosition()) + " / " + msToProperTime(track.getInfo().length), true);
-		else
-			info.addField("⌚ Duration", msToProperTime(track.getInfo().length), true);
-		info.setThumbnail("http://img.youtube.com/vi/" + track.getIdentifier() + "/0.jpg");
-		
-		return info;
-	}*/
 	
 	public static String msToProperTime(long timeMs) {
 		String time = "";

@@ -1,0 +1,9 @@
+me.night.midnight.midnight_bot.audio
+me.night.midnight.midnight_bot.audio.core
+me.night.midnight.midnight_bot.autoreply
+me.night.midnight.midnight_bot.commands
+me.night.midnight.midnight_bot.commands.moderation
+me.night.midnight.midnight_bot.core
+me.night.midnight.midnight_bot.core.settings
+me.night.midnight.midnight_bot.moderation.messageinterceptor
+me.night.midnight.midnight_bot.weighted

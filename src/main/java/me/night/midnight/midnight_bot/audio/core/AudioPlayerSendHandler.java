@@ -11,6 +11,7 @@ import net.dv8tion.jda.api.audio.AudioSendHandler;
  * This is a wrapper around AudioPlayer which makes it behave as an AudioSendHandler for JDA. As JDA calls canProvide
  * before every call to provide20MsAudio(), we pull the frame in canProvide() and use the frame we already pulled in
  * provide20MsAudio().
+ * @version 1.0.0
  */
 public class AudioPlayerSendHandler implements AudioSendHandler {
 	  private final AudioPlayer audioPlayer;

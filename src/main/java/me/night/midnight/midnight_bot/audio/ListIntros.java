@@ -1,5 +1,9 @@
 package me.night.midnight.midnight_bot.audio;
 
+import me.night.midnight.midnight_bot.core.Emojis;
+
+// SlashCommand to list a user's intros
+
 import me.night.midnight.midnight_bot.core.SlashCommand;
 import me.night.midnight.midnight_bot.core.settings.GuildSettings;
 import me.night.midnight.midnight_bot.core.settings.GuildSettingsHandler;
@@ -10,6 +14,13 @@ import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.requests.restaction.interactions.ReplyAction;
 
+/**
+ * A {@link SlashCommand} that lists all of a user's intros and outros in a MessageEmbed. Data includes filename,
+ * volume, weight, and whether or not it is locked to admin edits only.
+ * @author night
+ * @version 1.0.0
+ * @see IntroDetail
+ */
 public class ListIntros implements SlashCommand {
 	private String name = "listintros";
 	
@@ -48,19 +59,24 @@ public class ListIntros implements SlashCommand {
 	}
 	
 	private void addDetails(int index, WeightedList<IntroDetail> details, EmbedBuilder eb) {
+		// Get the intro
 		IntroDetail intro = details.getByTrueIndex(index);
+		
+		// Get the intro's filename
 		String introFilename = intro.getPath();
 		int startIndex = introFilename.length() - 1;
 		
 		while (introFilename.charAt(startIndex) != '\\') { startIndex--; }
-		
 		startIndex++;
 		
 		introFilename = introFilename.substring(startIndex);
+		
+		// Get the volume and weight of it
 		int volume = intro.getVolume();
 		int weight = details.getWeightOf(index);
 		
-		eb.addField((index + 1) + " - " + introFilename, "🔊 " + volume + "%  ⚖" + weight + (intro.isAdminOnly() ? "  🔒" : ""), false);
+		// Add the intro data to the embed
+		eb.addField((index + 1) + " - " + introFilename, Emojis.VOLUME + " " + volume + "%  " + Emojis.WEIGHT + weight + (intro.isAdminOnly() ? "  " + Emojis.LOCK : ""), false);
 	}
 
 	@Override

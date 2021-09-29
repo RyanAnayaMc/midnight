@@ -1,5 +1,7 @@
 package me.night.midnight.midnight_bot.commands;
 
+// SlashCommand to see bot's ping to Discord
+
 import me.night.midnight.midnight_bot.core.SlashCommand;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
@@ -12,7 +14,7 @@ public class Ping implements SlashCommand {
 	@Override
 	public void run(SlashCommandEvent e) {
 		long ping = e.getJDA().getGatewayPing();
-		e.reply("Right now my ping to Discord is **" + ping + "ms**!").setEphemeral(true).queue();
+		e.reply("Right now my ping to Discord is 📶**" + ping + "ms**!").setEphemeral(true).queue();
 	}
 
 	@Override
