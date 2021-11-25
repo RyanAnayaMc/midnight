@@ -43,7 +43,9 @@ public class CachedMessage {
 	}
 	
 	public List<File> getAttachments() {
-		return List.copyOf(attachment);
+		List<File> attachmentsCopy = new ArrayList<File>();
+		attachmentsCopy.addAll(attachment);
+		return attachmentsCopy;
 	}
 	
 	public boolean hasAttachments() {

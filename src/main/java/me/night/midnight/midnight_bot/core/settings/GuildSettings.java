@@ -29,7 +29,7 @@ public class GuildSettings {
 	
 	/**
 	 * Creates a default GuildSettings object for the given GUILD_ID, or open one if present
-	 * @param GUILD_ID the ID of the guild to make the object for
+	 * @param g the guild to make the object for
 	 */
 	public GuildSettings(Guild g) {
 		jda = g.getJDA();
@@ -356,7 +356,7 @@ public class GuildSettings {
 	/**
 	 * Sets the outros for a user
 	 * @param userId The user to set the outros for
-	 * @param intros The outros to add
+	 * @param outros The outros to add
 	 */
 	public void setOutrosFor(String userId, WeightedList<IntroDetail> outros) {
 		JSONArray jsonArray = new JSONArray();

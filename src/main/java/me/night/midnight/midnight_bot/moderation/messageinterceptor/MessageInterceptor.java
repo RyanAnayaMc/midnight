@@ -40,7 +40,7 @@ public class MessageInterceptor extends ListenerAdapter {
 				.setThumbnail(e.getGuild().getIconUrl())
 				.addField("Server", e.getGuild().getName(), false)
 				.addField("Channel", e.getChannel().getAsMention(), false);
-			if (!msg.getMessage().getContentRaw().isBlank())
+			if (!msg.getMessage().getContentRaw().isBlank());
 				eb.addField("Message", msg.getMessage().getContentRaw(), false);
 		}
 		
