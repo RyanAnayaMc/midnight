@@ -66,7 +66,7 @@ public class EditIntro implements SlashCommand {
 		}
 		
 		intros.remove(index);
-		IntroDetail newIntro = new IntroDetail(intro.getPath(), volume, intro.isAdminOnly(), intro.getExtraActions());
+		IntroDetail newIntro = new IntroDetail(intro.getPath(), volume, intro.isAdminOnly(), intro.ignoresTimeLimit(), intro.getExtraActions());
 		
 		intros.add(index, newIntro, weight);
 		

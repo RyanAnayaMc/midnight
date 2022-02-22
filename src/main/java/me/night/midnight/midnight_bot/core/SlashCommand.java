@@ -10,32 +10,32 @@ public interface SlashCommand {
 	 * Gets the CommandData for the object
 	 * @return the CommandData
 	 */
-	public CommandData getCommandData();
+	CommandData getCommandData();
 	
 	/**
 	 * Returns the name of this SlashCommand
 	 */
-	public String getName();
+	String getName();
 	
 	/**
 	 * Runs the command. Do not include permission checks here.
 	 * @param e The SlashCommandEvent context for hte command
 	 */
-	public void run(SlashCommandEvent e);
+	void run(SlashCommandEvent e);
 	
 	/**
 	 * Checks if the given Member can run the command
 	 * @param m	The member to check permissions for
 	 * @param reply The ReplyAction to use to give an error message
-	 * @return Whether or not the user can run the command
+	 * @return Whether the user can run the command
 	 */
-	public boolean checkPermissions(Member m, ReplyAction reply);
+	boolean checkPermissions(Member m, ReplyAction reply);
 	
 	/**
 	 * Executes the command, checking permissions first
 	 * @param e The SlashCommandEvent
 	 */
-	public default void execute(SlashCommandEvent e) {
+	default void execute(SlashCommandEvent e) {
 		if (checkPermissions(e.getMember(), e.deferReply(true)))
 			run(e);
 	}

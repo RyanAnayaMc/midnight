@@ -4,7 +4,6 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
-
 import me.night.midnight.midnight_bot.audio.core.GuildMusicManager;
 import me.night.midnight.midnight_bot.audio.core.PlayerManager;
 import me.night.midnight.midnight_bot.core.Logger;
@@ -18,8 +17,16 @@ import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.managers.AudioManager;
+import org.quartz.JobDetail;
+import org.quartz.SimpleTrigger;
+
+import java.util.Calendar;
+
+import static org.quartz.JobBuilder.newJob;
+import static org.quartz.TriggerBuilder.newTrigger;
 
 public class UserIntroHandler extends ListenerAdapter {
+	public static final long MAX_DURATION_MS = 10000;
 	@Override
 	public void onGuildVoiceJoin(GuildVoiceJoinEvent e) {
 		execute(e, e.getChannelJoined(), true);
@@ -70,6 +77,23 @@ public class UserIntroHandler extends ListenerAdapter {
 		// Set volume and play
 		musicManager.player.setVolume(play.getVolume());
 		PlayerManager.getInstance().loadAndPlay(e.getGuild(), play.getPath());
+
+		// Enforce time limit
+		if (!!play.ignoresTimeLimit() && musicManager.player.getPlayingTrack().getDuration() > settings.getMaxIntroLength()) {
+			Calendar calendar = Calendar.getInstance();
+			calendar.add(Calendar.MILLISECOND, (int) settings.getMaxIntroLength());
+
+			JobDetail stopIntro = newJob(IntroJob.class)
+					.withIdentity("endintro" + id)
+					.usingJobData("gid", e.getGuild().getIdLong())
+					.build();
+
+			SimpleTrigger introTrigger = (SimpleTrigger) newTrigger()
+					.withIdentity("endintrotrigger" + id)
+					.startAt(calendar.getTime())
+					.forJob("endintro" + id)
+					.build();
+		}
 		
 		Logger.log("Playing " + (isIntro ? "intro" : "outro") + " for user " + e.getMember().getEffectiveName() +
 				"\n" + play.getPath());
