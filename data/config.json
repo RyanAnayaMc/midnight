@@ -1,5 +1,5 @@
 {
   
-  "tokenPath": "data\\token.dat",
-  "logDirectory": "data\\logs\\"
+  "tokenPath": "data/token.dat",
+  "logDirectory": "data/logs/"
 }

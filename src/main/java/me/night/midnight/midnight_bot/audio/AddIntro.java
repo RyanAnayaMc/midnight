@@ -67,7 +67,7 @@ public class AddIntro implements SlashCommand {
 						return;
 					}
 					
-					String directory = "audio\\" + e.getGuild().getId() + "\\" + e.getMember().getId() + "\\";
+					String directory = "audio/" + e.getGuild().getId() + "/" + e.getMember().getId() + "/";
 					new File(directory).mkdirs();
 					
 					intro = new File(directory + a.getFileName());

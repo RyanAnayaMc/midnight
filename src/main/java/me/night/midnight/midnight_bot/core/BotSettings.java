@@ -9,13 +9,13 @@ public class BotSettings {
 	private String logDirectory;
 	private String tokenPath;
 	
-	public static final String BOT_CONFIG_LOCATION = "data\\config.json";
-	public static final String BOT_CONFIG_DIRECTORY = "data\\";
+	public static final String BOT_CONFIG_LOCATION = "data/config.json";
+	public static final String BOT_CONFIG_DIRECTORY = "data/";
 	public static final String BOT_CONFIG_FILENAME = "config.json";
-	public static final String LOG_DIRECTORY_DEFAULT = "data\\logs\\";
-	public static final String TOKEN_PATH_DEFAULT = "data\\token.dat";
-	public static final String GUILD_DATA_DEFAULT = "data\\guild\\";
-	public static final String ATTACHMENT_CACHE_DEFAULT = "data\\attachments\\";
+	public static final String LOG_DIRECTORY_DEFAULT = "data/logs/";
+	public static final String TOKEN_PATH_DEFAULT = "data/token.dat";
+	public static final String GUILD_DATA_DEFAULT = "data/guild/";
+	public static final String ATTACHMENT_CACHE_DEFAULT = "data/attachments/";
 	
 	public void readSettings() {
 		// Attempt to open the file

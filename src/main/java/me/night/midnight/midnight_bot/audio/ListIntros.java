@@ -52,7 +52,7 @@ public class ListIntros implements SlashCommand {
 		String introFilename = intro.getPath();
 		int startIndex = introFilename.length() - 1;
 		
-		while (introFilename.charAt(startIndex) != '\\') { startIndex--; }
+		while (introFilename.charAt(startIndex) != '/') { startIndex--; }
 		
 		startIndex++;
 		
