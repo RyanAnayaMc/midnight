@@ -35,6 +35,11 @@ public class AddIntro implements SlashCommand {
 		GuildSettings settings = GuildSettingsHandler.getSettingsFor(e.getGuild());
 		WeightedList<IntroDetail> intros = settings.getIntrosFor(e.getMember().getId());
 		
+		if (intros.length() > 5) {
+			e.reply("❌ You are only allowed 5 intros. Remove some with `/removeintro`.").setEphemeral(true).queue();
+			return;
+		}
+		
 		e.reply("📨 Check your DMs!").setEphemeral(true).queue();
 		
 		e.getUser().openPrivateChannel().queue(ev -> {

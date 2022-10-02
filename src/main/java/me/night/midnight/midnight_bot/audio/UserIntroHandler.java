@@ -46,7 +46,9 @@ public class UserIntroHandler extends ListenerAdapter {
 		Guild g = e.getGuild();
 		GuildSettings settings = GuildSettingsHandler.getSettingsFor(g);
 		
-		// TODO add check for valid channel
+		// Check for valid channel
+		if (!isValidIntroChannel(vc))
+			return;
 		
 		// Get intros or outros for the user
 		String id = e.getMember().getId();
@@ -100,6 +102,27 @@ public class UserIntroHandler extends ListenerAdapter {
 		
 		// Run ending actions when over
 		musicManager.player.addListener(new EndActions(g));
+	}
+	
+	/**
+	 * Determines if intros are allowed to play in this voice channel
+	 * @param ch The voice channel
+	 * @return Whether intros are allowed in this channel
+	 */
+	private boolean isValidIntroChannel(VoiceChannel ch) {
+		boolean idMatch = false;
+		
+		GuildSettings settings = GuildSettingsHandler.getSettingsFor(ch.getGuild());
+		long[] channels = settings.getIntroChannelsList();
+		boolean whitelistMode = settings.getWhitelistMode();
+		
+		for (long id : channels)
+			if (id == ch.getIdLong()) {
+				idMatch = true;
+				break;
+			}
+		
+		return idMatch == whitelistMode;
 	}
 	
 	private class EndActions extends AudioEventAdapter {

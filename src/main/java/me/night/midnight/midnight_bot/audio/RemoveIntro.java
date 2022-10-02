@@ -1,5 +1,6 @@
 package me.night.midnight.midnight_bot.audio;
 
+import java.io.File;
 import me.night.midnight.midnight_bot.core.SlashCommand;
 import me.night.midnight.midnight_bot.core.settings.GuildSettings;
 import me.night.midnight.midnight_bot.core.settings.GuildSettingsHandler;
@@ -32,7 +33,7 @@ public class RemoveIntro implements SlashCommand {
 		
 		int intro = (int) (e.getOption("index").getAsLong() - 1);
 		
-		if (intro < 1 || intro >= intros.length()) {
+		if (intro < 0 || intro >= intros.length()) {
 			e.reply("❌ That intro does not exist. Check your intros with `/listintros`").setEphemeral(true).queue();
 			return;
 		}
@@ -42,6 +43,8 @@ public class RemoveIntro implements SlashCommand {
 			return;
 		}
 		
+		new File(intros.getByTrueIndex(intro).getPath()).delete();
+				
 		intros.remove(intro);
 		
 		e.reply("✅ Successfully removed intro.").setEphemeral(true).queue();

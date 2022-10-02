@@ -36,6 +36,10 @@ public class MessageInterceptor extends ListenerAdapter {
 				.addField("Channel", e.getChannel().getAsMention(), false)
 				.addField("Message", "The message was not found in the cache.", false);
 		} else {
+			// Ensure that the author is not a bot
+			if (msg.getMessage().getAuthor().isBot())
+				return;
+			
 			eb.setAuthor("Author: " + msg.getMessage().getMember().getEffectiveName(), msg.getMessage().getAuthor().getAvatarUrl(), msg.getMessage().getAuthor().getAvatarUrl())
 				.setThumbnail(e.getGuild().getIconUrl())
 				.addField("Server", e.getGuild().getName(), false)

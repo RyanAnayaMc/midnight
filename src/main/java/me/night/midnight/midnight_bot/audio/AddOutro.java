@@ -31,9 +31,14 @@ public class AddOutro implements SlashCommand {
 
 	@Override
 	public void run(SlashCommandEvent e) {
-		// Get list of intros
+		// Get list of outros
 		GuildSettings settings = GuildSettingsHandler.getSettingsFor(e.getGuild());
 		WeightedList<IntroDetail> outros = settings.getOutrosFor(e.getMember().getId());
+		
+		if (outros.length() > 5) {
+			e.reply("❌ You are only allowed 5 outros. Remove some with `/removeoutro`.").setEphemeral(true).queue();
+			return;
+		}
 		
 		e.reply("📨 Check your DMs!").setEphemeral(true).queue();
 		

@@ -59,7 +59,7 @@ public class GuildSettings {
 	}
 
 	/**
-	 * Retreives a JSONArray based on a sequence of keys
+	 * retrieves a JSONArray based on a sequence of keys
 	 * Fixes the JSON if any keys don't exist
 	 * @param dflt The default value if not found
 	 * @param keys The keys, in order, to the wanted key
@@ -82,7 +82,11 @@ public class GuildSettings {
 	}
 	
 	/**
+<<<<<<< Updated upstream
 	 * Retrieves a long based on a sequence of keys
+=======
+	 * retrieves a long based on a sequence of keys
+>>>>>>> Stashed changes
 	 * Fixes the JSON if any keys don't exist
 	 * @param dflt The default value if not found
 	 * @param keys The keys, in order, to the wanted key
@@ -105,7 +109,34 @@ public class GuildSettings {
 	}
 	
 	/**
+<<<<<<< Updated upstream
 	 * Sets a long based on a sequence of keys, creating JSON objects as needed
+=======
+	 * retrieves a boolean based on a sequence of keys
+	 * Fixes the JSON if any keys don't exist
+	 * @param dflt The default value if not found
+	 * @param keys The keys, in order, to the wanted key
+	 * @return The boolean value associated with the keys
+	 */
+	private boolean retrieveBoolean(boolean dflt, String...keys) {
+		JSONObject json = retrieveParentJsonObject(keys);
+		
+		// json is now the last nested json
+		String lastKey = keys[keys.length - 1];
+		boolean item = dflt;
+		try {
+			item = json.getBoolean(lastKey);
+		} catch (JSONException e) {
+			json.put(lastKey, dflt);
+		}
+		
+		write();
+		return item;
+	}
+	
+	/**
+	 * Sets a long based on a sequnce of keys, creating JSON objects as needed
+>>>>>>> Stashed changes
 	 * @param value The long value to put
 	 * @param keys The keys in order to the wanted key
 	 */
@@ -157,6 +188,10 @@ public class GuildSettings {
 						new JSONObject())
 				.put("userOutros",
 						new JSONObject())
+				.put("introChannels",
+						new JSONArray())
+				.put("introChannelsWhitelist",
+						false)
 				.put("usernameChangers",
 						new JSONArray())
 				.put("msglogmods", 
@@ -167,16 +202,13 @@ public class GuildSettings {
 									new JSONArray())
 							.put("slash",
 									new JSONArray())
-					)
-				.put("modprefs", new JSONObject()
-						.put("textBanRole", 0L)
-						.put("imgBanRole", 0L)
-						.put("vcBanRole", 0L));
+					);
 		
 		return guildSettings;
 	}
 	
 	/**
+<<<<<<< Updated upstream
 	 * Returns the role for text bans in the server
 	 * @return The role. If no set or not found, returns null.
 	 * @deprecated Discord's Timeout feature works better in most cases.
@@ -225,30 +257,6 @@ public class GuildSettings {
 		long id = r.getIdLong();
 		
 		setLong(id, "modprefs", "textBanRole");
-	}
-
-	/**
-	 * Updates the role for image bans and updates the config.
-	 * @param r The new Role for image bans.
-	 * @deprecated Discord's Timeout feature works better in most cases.
-	 */
-	@Deprecated
-	public void setImageBanRole(Role r) {
-		long id = r.getIdLong();
-		
-		setLong(id, "modprefs", "imgBanRole");
-	}
-	
-	/**
-	 * Updates the role for voice bans and updates the config.
-	 * @param r The new Role for voice bans.
-	 * @deprecated Discord's Timeout feature works better in most cases.
-	 */
-	@Deprecated
-	public void setVoiceBanRole(Role r) {
-		long id = r.getIdLong();
-		
-		setLong(id, "modprefs", "vcBanRole");
 	}
 	//endregion
 
