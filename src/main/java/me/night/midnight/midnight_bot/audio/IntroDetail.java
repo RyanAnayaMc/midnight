@@ -1,15 +1,16 @@
 package me.night.midnight.midnight_bot.audio;
 
-import java.util.Arrays;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Arrays;
 
 public class IntroDetail {
 	private String path;
 	private int volume;
 	private ExtraAction[] extraActions;
+	private boolean ignoreTimeLimit;
 	private boolean adminOnly;
 	private boolean IS_BLANK;
 	
@@ -20,8 +21,9 @@ public class IntroDetail {
 	public IntroDetail(JSONObject jsonObj) {
 		try {
 			path = jsonObj.getString("path");
-			volume = jsonObj.getInt("volume");
-			adminOnly = jsonObj.getBoolean("adminOnly");
+			volume = jsonObj.optInt("volume",50);
+			adminOnly = jsonObj.optBoolean("adminOnly", false);
+			ignoreTimeLimit = jsonObj.optBoolean("ignoreTimeLimit", false);
 			
 			JSONArray extra = jsonObj.getJSONArray("extra");
 			extraActions = new ExtraAction[extra.length()];
@@ -39,7 +41,7 @@ public class IntroDetail {
 		
 		IS_BLANK = false;
 	}
-	
+
 	/**
 	 * Creates a new IntroDetail
 	 * @param p The path to the audio file
@@ -48,10 +50,23 @@ public class IntroDetail {
 	 * @param actions Any extra actions that will occur
 	 */
 	public IntroDetail(String p, int vol, boolean admin, ExtraAction...actions) {
+		this(p, vol, admin, false, actions);
+	}
+
+	/**
+	 * Creates a new IntroDetail
+	 * @param p The path to the audio file
+	 * @param vol The volume for the sound
+	 * @param admin Whether or not this IntroDetail can only be changed by admins
+	 * @param ignoreTime Whether this intro will ignore the intro time limit.
+	 * @param actions Any extra actions that will occur
+	 */
+	public IntroDetail(String p, int vol, boolean admin, boolean ignoreTime, ExtraAction...actions) {
 		path = p;
 		volume = Math.max(0, Math.min(vol, 500));
 		extraActions = actions;
 		adminOnly = admin;
+		ignoreTimeLimit = ignoreTime;
 		IS_BLANK = false;
 	}
 	
@@ -76,9 +91,13 @@ public class IntroDetail {
 				.put("volume", volume)
 				.put("adminOnly", adminOnly)
 				.put("extra", jsonArr)
-				.put("weight", weight);
-		
+				.put("weight", weight)
+				.put("ignoreTimeLimit", ignoreTimeLimit);
 		return jsonObj;
+	}
+
+	public boolean ignoresTimeLimit() {
+		return ignoreTimeLimit;
 	}
 	
 	public boolean isBlank() {

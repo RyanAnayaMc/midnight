@@ -1,7 +1,5 @@
 package me.night.midnight.midnight_bot.commands;
 
-import java.util.List;
-
 import me.night.midnight.midnight_bot.core.SlashCommand;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
@@ -12,8 +10,10 @@ import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.requests.restaction.interactions.ReplyAction;
 
+import java.util.List;
+
 public class Migrate implements SlashCommand {
-	private String name = "migrate";
+	private final String name = "migrate";
 	
 	@Override
 	public void run(SlashCommandEvent e) {

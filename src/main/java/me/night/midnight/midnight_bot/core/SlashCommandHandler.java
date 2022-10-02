@@ -15,12 +15,6 @@ import me.night.midnight.midnight_bot.audio.RemoveIntro;
 import me.night.midnight.midnight_bot.audio.RemoveOutro;
 import me.night.midnight.midnight_bot.commands.Migrate;
 import me.night.midnight.midnight_bot.commands.Ping;
-import me.night.midnight.midnight_bot.commands.moderation.ImgBan;
-import me.night.midnight.midnight_bot.commands.moderation.MsgBan;
-import me.night.midnight.midnight_bot.commands.moderation.SetImgBan;
-import me.night.midnight.midnight_bot.commands.moderation.SetMsgBan;
-import me.night.midnight.midnight_bot.commands.moderation.SetVcBan;
-import me.night.midnight.midnight_bot.commands.moderation.VcBan;
 import me.night.midnight.midnight_bot.commands.moderation.ViewLog;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
@@ -44,12 +38,6 @@ public class SlashCommandHandler extends ListenerAdapter {
 		jda.addEventListener(waiter);
 		
 		cmds.add(new Ping());
-		cmds.add(new SetMsgBan());
-		cmds.add(new SetImgBan());
-		cmds.add(new SetVcBan());
-		cmds.add(new MsgBan());
-		cmds.add(new ImgBan());
-		cmds.add(new VcBan());
 		cmds.add(new ViewLog());
 		cmds.add(new Migrate());
 		cmds.add(new ListIntros());

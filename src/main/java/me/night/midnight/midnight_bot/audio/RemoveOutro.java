@@ -1,5 +1,7 @@
 package me.night.midnight.midnight_bot.audio;
 
+import java.io.File;
+
 import me.night.midnight.midnight_bot.core.SlashCommand;
 import me.night.midnight.midnight_bot.core.settings.GuildSettings;
 import me.night.midnight.midnight_bot.core.settings.GuildSettingsHandler;
@@ -28,25 +30,27 @@ public class RemoveOutro implements SlashCommand {
 	@Override
 	public void run(SlashCommandEvent e) {
 		GuildSettings settings = GuildSettingsHandler.getSettingsFor(e.getGuild());
-		WeightedList<IntroDetail> intros = settings.getOutrosFor(e.getMember().getId());
+		WeightedList<IntroDetail> outros = settings.getOutrosFor(e.getMember().getId());
 		
-		int intro = (int) (e.getOption("index").getAsLong() - 1);
+		int outro = (int) (e.getOption("index").getAsLong() - 1);
 		
-		if (intro < 1 || intro >= intros.length()) {
+		if (outro < 0 || outro >= outros.length()) {
 			e.reply("❌ That outro does not exist. Check your outros with `/listintros`").setEphemeral(true).queue();
 			return;
 		}
 		
-		if (intros.getByTrueIndex(intro).isAdminOnly() && !e.getMember().hasPermission(Permission.ADMINISTRATOR)) {
+		if (outros.getByTrueIndex(outro).isAdminOnly() && !e.getMember().hasPermission(Permission.ADMINISTRATOR)) {
 			e.reply("❌ You must be an administrator to remove that outro!").setEphemeral(true).queue();
 			return;
 		}
 		
-		intros.remove(intro);
+		new File(outros.getByTrueIndex(outro).getPath()).delete();
+		
+		outros.remove(outro);
 		
 		e.reply("✅ Successfully removed outro.").setEphemeral(true).queue();
 		
-		settings.setOutrosFor(e.getMember().getId(), intros);
+		settings.setOutrosFor(e.getMember().getId(), outros);
 	}
 
 	@Override

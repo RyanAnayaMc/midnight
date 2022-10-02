@@ -6,7 +6,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class BotSettings {
+	@SuppressWarnings("unused")
 	private String logDirectory;
+	@SuppressWarnings("unused")
 	private String tokenPath;
 	
 	public static final String BOT_CONFIG_LOCATION = "data\\config.json";
